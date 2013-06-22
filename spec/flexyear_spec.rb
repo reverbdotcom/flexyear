@@ -74,6 +74,12 @@ describe FlexYear do
     end
   end
 
+  context 'given before 1973' do
+    subject { FlexYear.new('before 1973') }
+    its(:year_low) { should eq(-Float::INFINITY) }
+    its(:year_high) { should eq(1973) }
+  end
+
   ["73-75", "1973-1975", "1973 - 1975", "1973- 1975", "1973 -1975", "1973-75"].each do |range|
     context "given a range #{range}" do
       subject { FlexYear.new(range) }
