@@ -5,7 +5,7 @@ require 'flexyear/version'
 
 Gem::Specification.new do |spec|
   spec.name          = "flexyear"
-  spec.version       = Flexyear::VERSION
+  spec.version       = FlexYear::VERSION
   spec.authors       = ["Dan Melnick & Yan Pritzker"]
   spec.email         = ["pair+dm+yp@reverb.com"]
   spec.description   = %q{Parse common year range formats like '1973-75' or natural language ranges like 'mid 80s'}
