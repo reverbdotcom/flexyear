@@ -4,11 +4,13 @@ Flexible years! Parse decades, ranges, and etc into low & high values.
 
 Examples:
 
-    FlexYear.new("1980s").year_low = 1980
-    FlexYear.new("1980s").year_high == 1989
+```ruby
+FlexYear.new("1980s").year_low == 1980
+FlexYear.new("1980s").year_high == 1989
 
-    FlexYear.new("mid-80s").year_low == 1983
-    FlexYear.new("mid-80s").year_high == 1986
+FlexYear.new("mid-80s").year_low == 1983
+FlexYear.new("mid-80s").year_high == 1986
+```
 
 It's pretty flexible in the kinds of things it takes. For more examples, see the spec.
 
@@ -16,7 +18,9 @@ It's pretty flexible in the kinds of things it takes. For more examples, see the
 
 Add this line to your application's Gemfile:
 
-    gem 'flexyear'
+```ruby
+gem 'flexyear'
+```
 
 And then execute:
 
@@ -25,7 +29,6 @@ And then execute:
 Or install it yourself as:
 
     $ gem install flexyear
-
 
 ## Contributing
 
