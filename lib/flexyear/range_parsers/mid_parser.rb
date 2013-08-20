@@ -4,10 +4,6 @@ class FlexYear
       string.start_with?('mid')
     end
 
-    def initialize(string)
-      @string = string
-    end
-
     def parse
       [3, 6]
     end

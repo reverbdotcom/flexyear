@@ -4,10 +4,6 @@ class FlexYear
       string.downcase.include?('reissue')
     end
 
-    def initialize(string)
-      @string = string
-    end
-
     def parse
       raise InvalidYearError, 'Please enter the date of manufacture, not the reissue era.'
     end

@@ -23,5 +23,9 @@ class FlexYear
     def self.inherited(subclass)
       RangeParser.parser_classes << subclass
     end
+
+    def initialize(string)
+      @string = string
+    end
   end
 end

@@ -4,10 +4,6 @@ class FlexYear
       string.start_with?('late')
     end
 
-    def initialize(string)
-      @string = string
-    end
-
     def parse
       [6, 9]
     end

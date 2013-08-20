@@ -4,10 +4,6 @@ class FlexYear
       string.end_with?('s')
     end
 
-    def initialize(string)
-      @string = string
-    end
-
     def parse
       [0, 9]
     end

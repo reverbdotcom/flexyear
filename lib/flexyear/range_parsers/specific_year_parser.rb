@@ -4,10 +4,6 @@ class FlexYear
       string =~ /\A\d+\z/
     end
 
-    def initialize(string)
-      @string = string
-    end
-
     def parse
       [0, 0]
     end
