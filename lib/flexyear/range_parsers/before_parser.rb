@@ -4,10 +4,6 @@ class FlexYear
       string.start_with?('before')
     end
 
-    def initialize(string)
-      @string = string
-    end
-
     def parse
       [-Float::INFINITY, 0]
     end

@@ -4,10 +4,6 @@ class FlexYear
       string.start_with?('after')
     end
 
-    def initialize(string)
-      @string = string
-    end
-
     def parse
       [0, Float::INFINITY]
     end
