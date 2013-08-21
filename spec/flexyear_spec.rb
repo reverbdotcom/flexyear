@@ -96,12 +96,6 @@ describe FlexYear do
     end
   end
 
-  context 'given a reissue' do
-    specify do
-      expect { FlexYear.new('65 reissue') }.to raise_error(FlexYear::InvalidYearError)
-    end
-  end
-
   context 'given a circa' do
     context 'at the end of the string' do
       subject { FlexYear.new('1973 (Circa)') }
