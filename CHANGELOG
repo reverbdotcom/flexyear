@@ -1,0 +1,5 @@
+0.0.2
+	- Refactor main parser code into parser subclasses (@tmaier)
+	- Remove ReissueParser, moved to Reverb codebase as it's not generic
+0.0.1
+	- Initial Release
