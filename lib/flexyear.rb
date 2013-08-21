@@ -70,8 +70,8 @@ class FlexYear
         raise InvalidYearError, "Please use a four digit year."
       end
 
-      @year_low = @base_year + (@low || 0)
-      @year_high = @base_year + (@high || 0)
+      @year_low = @base_year + @low unless @low.nil?
+      @year_high = @base_year + @high unless @high.nil?
     end
   end
 

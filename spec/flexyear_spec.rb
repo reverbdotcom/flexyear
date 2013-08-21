@@ -4,20 +4,20 @@ describe FlexYear do
   [FlexYear, FlexYear::Historical].each do |flexyear_class|
     context "given a blank string" do
       subject { flexyear_class.new("") }
-      its(:year_low) { should eq(0) }
-      its(:year_high) { should eq(0) }
+      its(:year_low) { should be_nil }
+      its(:year_high) { should be_nil }
     end
 
     context "given nil" do
       subject { flexyear_class.new(nil) }
-      its(:year_low) { should eq(0) }
-      its(:year_high) { should eq(0) }
+      its(:year_low) { should be_nil }
+      its(:year_high) { should be_nil }
     end
 
     context "text" do
       subject { flexyear_class.new("something") }
-      its(:year_low) { should eq(0) }
-      its(:year_high) { should eq(0) }
+      its(:year_low) { should be_nil }
+      its(:year_high) { should be_nil }
     end
 
     context "given 1979 as number" do
@@ -52,14 +52,14 @@ describe FlexYear do
     
     context 'given before 1973' do
       subject { FlexYear.new('before 1973') }
-      its(:year_low) { should eq(-Float::INFINITY) }
+      its(:year_low) { should be_nil }
       its(:year_high) { should eq(1973) }
     end
     
     context 'given after 1973' do
       subject { FlexYear.new('after 1973') }
       its(:year_low) { should eq(1973) }
-      its(:year_high) { should eq(Float::INFINITY) }
+      its(:year_high) { should be_nil }
     end
 
     ["mid 1970s", "mid 70s", "mid-70s", "mid-70's"].each do |year|

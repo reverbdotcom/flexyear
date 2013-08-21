@@ -5,7 +5,7 @@ class FlexYear
     end
 
     def parse
-      [-Float::INFINITY, 0]
+      [nil, 0]
     end
   end
 end
