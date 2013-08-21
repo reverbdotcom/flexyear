@@ -1,3 +1,12 @@
+require 'flexyear/range_parsers/range_parser'
+require 'flexyear/range_parsers/early_parser'
+require 'flexyear/range_parsers/mid_parser'
+require 'flexyear/range_parsers/late_parser'
+require 'flexyear/range_parsers/decade_parser'
+require 'flexyear/range_parsers/year_range_parser'
+require 'flexyear/range_parsers/circa_parser'
+require 'flexyear/range_parsers/reissue_parser'
+require 'flexyear/range_parsers/specific_year_parser'
 require 'flexyear/version'
 require 'date'
 
@@ -14,39 +23,10 @@ class FlexYear
 
   attr_reader :year_low, :year_high
 
-  CIRCA_KEYWORDS = ["circ", "ca", "c.a.", "ca.", "cca", "c.", "approx", "appx", "about", "around"]
-
   def initialize(year_string)
     @year_string = year_string.to_s
 
-    if @year_string.start_with?("early")
-      @low = 0
-      @high = 3
-    elsif @year_string.start_with?("mid")
-      @low = 3
-      @high = 6
-    elsif @year_string.start_with?("late")
-      @low = 6
-      @high = 9
-    elsif @year_string.end_with?("s") # decade
-      @low = 0
-      @high = 9
-    elsif @year_string.include?("-")
-      @year_string =~ /(\d+)\s*-\s*(\d+)/
-      if $1 && $2
-        @year_low = centuryize($1).to_i
-        @year_high = centuryize($2, @year_low).to_i
-        return
-      end
-    elsif CIRCA_KEYWORDS.any?{|circa_pattern| @year_string.downcase.include?(circa_pattern)}
-      @low  = -1
-      @high = 1
-    elsif @year_string.downcase.include?('reissue')
-      raise InvalidYearError, 'Please enter the date of manufacture, not the reissue era.'
-    else # specific year
-      @low = 0
-      @high = 0
-    end
+    @low, @high = RangeParser.parse(@year_string)
 
     parse_year
   end
@@ -73,20 +53,25 @@ class FlexYear
   end
 
   def parse_year
-    if @year_string =~ /(\d+).*s$/
-      @base_year = centuryize($1).to_i
-    elsif @year_string =~ /^\w+\s+(\d+)/
-      @base_year = centuryize($1).to_i
+    if @year_string =~ /(\d+)\s*-\s*(\d+)/ && $1 && $2
+      @year_low = centuryize($1).to_i
+      @year_high = centuryize($2, @year_low).to_i
     else
-      @base_year = @year_string.gsub(/\D+/,'').to_i
-    end
+      if @year_string =~ /(\d+).*s$/
+        @base_year = centuryize($1).to_i
+      elsif @year_string =~ /^\w+\s+(\d+)/
+        @base_year = centuryize($1).to_i
+      else
+        @base_year = @year_string.gsub(/\D+/,'').to_i
+      end
 
-    if @base_year > 9999
-      raise InvalidYearError, "Please use a four digit year."
-    end
+      if @base_year > 9999
+        raise InvalidYearError, "Please use a four digit year."
+      end
 
-    @year_low = @base_year + (@low || -1)
-    @year_high = @base_year + (@high || 1)
+      @year_low = @base_year + (@low || 0)
+      @year_high = @base_year + (@high || 0)
+    end
   end
 
   # Represents a flexible year entry that must be in the past.
