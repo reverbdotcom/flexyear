@@ -82,6 +82,12 @@ describe FlexYear do
     end
   end
 
+  context "given a range 1975-1973 (from high to low)" do
+    subject { FlexYear.new('1975-1973') }
+    its(:year_low) { should eq(1973) }
+    its(:year_high) { should eq(1975) }
+  end
+
   context "given a range" do
     ["2003-4", "2003-04"].each do |range|
       subject { FlexYear.new(range) }
