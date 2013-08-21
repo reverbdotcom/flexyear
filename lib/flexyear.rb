@@ -55,7 +55,7 @@ class FlexYear
   def parse_year
     if @year_string =~ /(\d+)\s*-\s*(\d+)/ && $1 && $2
       @year_low = centuryize($1).to_i
-      @year_high = centuryize($2, @year_low).to_i
+      @year_low, @year_high = [@year_low, centuryize($2, @year_low).to_i].sort
     else
       if @year_string =~ /(\d+).*s$/
         @base_year = centuryize($1).to_i
