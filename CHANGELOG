@@ -1,3 +1,6 @@
+0.0.3
+	- Bugfix: FlexYear::Historical was broken in 0.0.2 when dealing with date
+	ranges
 0.0.2
 	- Refactor main parser code into parser subclasses (@tmaier)
 	- Remove ReissueParser, moved to Reverb codebase as it's not generic
