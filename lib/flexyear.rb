@@ -82,7 +82,7 @@ class FlexYear
     def parse_year
       super
 
-      if @year_low > DateTime.now.year || @year_high > DateTime.now.year
+      if (!@year_low.nil? && @year_low > DateTime.now.year) || (!@year_high.nil? && @year_high > DateTime.now.year)
         raise InvalidYearError, "The year must be in the past. You specified #{@base_year}; Today is #{DateTime.now.year}"
       end
     end
