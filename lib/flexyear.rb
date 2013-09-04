@@ -2,6 +2,8 @@ require 'flexyear/range_parsers/range_parser'
 require 'flexyear/range_parsers/early_parser'
 require 'flexyear/range_parsers/mid_parser'
 require 'flexyear/range_parsers/late_parser'
+require 'flexyear/range_parsers/after_parser'
+require 'flexyear/range_parsers/before_parser'
 require 'flexyear/range_parsers/decade_parser'
 require 'flexyear/range_parsers/year_range_parser'
 require 'flexyear/range_parsers/circa_parser'
@@ -68,8 +70,8 @@ class FlexYear
         raise InvalidYearError, "Please use a four digit year."
       end
 
-      @year_low = @base_year + (@low || 0)
-      @year_high = @base_year + (@high || 0)
+      @year_low = @base_year + @low unless @low.nil?
+      @year_high = @base_year + @high unless @high.nil?
     end
   end
 
@@ -80,8 +82,8 @@ class FlexYear
     def parse_year
       super
 
-      if @year_low > DateTime.now.year || @year_high > DateTime.now.year
-        raise InvalidYearError, "The year must be in the past. You specified #{@base_year}; Today is #{DateTime.now.year}"
+      if (!@year_low.nil? && @year_low > DateTime.now.year) || (!@year_high.nil? && @year_high > DateTime.now.year)
+        raise InvalidYearError, "The year must be in the past. You specified #{@year_string}; Today is #{DateTime.now.year}"
       end
     end
   end
