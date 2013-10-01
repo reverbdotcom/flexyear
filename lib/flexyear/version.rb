@@ -1,3 +1,3 @@
 class FlexYear
-  VERSION = "0.0.3"
+  VERSION = "1.0.0"
 end
