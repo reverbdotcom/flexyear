@@ -32,6 +32,12 @@ describe FlexYear do
       its(:year_high) { should eq(1979) }
     end
 
+    context 'given 197*' do
+      subject { flexyear_class.new('197*') }
+      its(:year_low) { should eq(1970) }
+      its(:year_high) { should eq(1979) }
+    end
+
     context "given 1970s" do
       subject { flexyear_class.new("1970s") }
       its(:year_low) { should eq(1970) }
@@ -49,13 +55,13 @@ describe FlexYear do
       its(:year_low) { should eq(2005) }
       its(:year_high) { should eq(2007) }
     end
-    
+
     context 'given before 1973' do
       subject { FlexYear.new('before 1973') }
       its(:year_low) { should be_nil }
       its(:year_high) { should eq(1973) }
     end
-    
+
     context 'given after 1973' do
       subject { FlexYear.new('after 1973') }
       its(:year_low) { should eq(1973) }
