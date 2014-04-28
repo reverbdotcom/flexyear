@@ -1,4 +1,5 @@
 require 'flexyear/range_parsers/range_parser'
+require 'flexyear/range_parsers/asterisk_parser'
 require 'flexyear/range_parsers/early_parser'
 require 'flexyear/range_parsers/mid_parser'
 require 'flexyear/range_parsers/late_parser'
@@ -54,13 +55,15 @@ class FlexYear
   end
 
   def parse_year
-    if @year_string =~ /(\d+)\s*-\s*(\d+)/ && $1 && $2
+    if @year_string =~ range_regex && $1 && $2
       @year_low = centuryize($1).to_i
       @year_low, @year_high = [@year_low, centuryize($2, @year_low).to_i].sort
     else
-      if @year_string =~ /(\d+).*s$/
+      if @year_string =~ decade_regex
         @base_year = centuryize($1).to_i
-      elsif @year_string =~ /^\w+\s+(\d+)/
+      elsif @year_string =~ asterisk_regex
+        @base_year = centuryize($1).to_i * 10
+      elsif @year_string =~ starts_with_word_regex
         @base_year = centuryize($1).to_i
       else
         @base_year = @year_string.gsub(/\D+/,'').to_i
@@ -73,6 +76,22 @@ class FlexYear
       @year_low = @base_year + @low unless @low.nil?
       @year_high = @base_year + @high unless @high.nil?
     end
+  end
+
+  def range_regex
+    /(\d+)\s*-\s*(\d+)/
+  end
+
+  def asterisk_regex
+    /(\d+).*\*$/
+  end
+
+  def decade_regex
+    /(\d+).*s$/
+  end
+
+  def starts_with_word_regex
+    /^\w+\s+(\d+)/
   end
 
   # Represents a flexible year entry that must be in the past.
