@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.email         = ["pair+dm+yp@reverb.com"]
   spec.description   = %q{Parse common year range formats like '1973-75' or natural language ranges like 'mid 80s'}
   spec.summary       = %q{Natural language year range parser}
-  spec.homepage      = "http://github.com/reverbdev/flexyear"
+  spec.homepage      = "http://github.com/reverbdotcom/flexyear"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files`.split($/)
