@@ -1,3 +1,4 @@
+require "rspec/its"
 require 'flexyear'
 
 describe FlexYear do
