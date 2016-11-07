@@ -40,7 +40,7 @@ class FlexYear
   private
 
   def centuryize(year, base_year=nil)
-    base = "19" # 19th century
+    base = default_base_year(year)
     if base_year
       base = (base_year/100).to_s
     end
@@ -51,6 +51,15 @@ class FlexYear
       "#{base}#{year}"
     else
       year
+    end
+  end
+
+  def default_base_year(year)
+    current_year = Date.today.year.to_s
+    if year.to_i < current_year[-2..-1].to_i
+      "20" # 21st century
+    else
+      "19" # 20th century
     end
   end
 
@@ -66,7 +75,7 @@ class FlexYear
       elsif @year_string =~ starts_with_word_regex
         @base_year = centuryize($1).to_i
       else
-        @base_year = @year_string.gsub(/\D+/,'').to_i
+        @base_year = centuryize(@year_string.gsub(/\D+/,'')).to_i
       end
 
       if @base_year > 9999

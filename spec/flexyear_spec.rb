@@ -1,7 +1,12 @@
+require "rspec"
 require "rspec/its"
 require 'flexyear'
 
 describe FlexYear do
+  before do
+    allow(Date).to receive(:today) { Date.parse("2016-11-07") }
+  end
+
   [FlexYear, FlexYear::Historical].each do |flexyear_class|
     context "given a blank string" do
       subject { flexyear_class.new("") }
@@ -109,7 +114,7 @@ describe FlexYear do
     end
 
     context "given a range" do
-      ["2003-4", "2003-04"].each do |range|
+      ["2003-4", "2003-04", "03-04"].each do |range|
         subject { flexyear_class.new(range) }
         its(:year_low) { should eq(2003) }
         its(:year_high) { should eq(2004) }
@@ -189,6 +194,19 @@ describe FlexYear do
         its(:year_high) { should eq(1974) }
       end
 
+      context 'given 2 character fields' do
+        context "from previous century" do
+          subject { flexyear_class.new("73") }
+          its(:year_low) { should eq(1973) }
+          its(:year_high) { should eq(1973) }
+        end
+
+        context "from current century" do
+          subject { flexyear_class.new("06") }
+          its(:year_low) { should eq(2006) }
+          its(:year_high) { should eq(2006) }
+        end
+      end
     end
 
     context "given 12345 (five digit year)" do
