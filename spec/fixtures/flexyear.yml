@@ -1,0 +1,94 @@
+- input:
+  year_low:
+  year_high:
+
+- input: ""
+  year_low:
+  year_high:
+
+- input: "something"
+  year_low:
+  year_high:
+
+- input: "1979"
+  year_low: 1979
+  year_high: 1979
+
+- input:
+    - "197*"
+    - "1970s"
+    - "70s"
+  year_low: 1970
+  year_high: 1979
+
+- input: "approx.-2006"
+  year_low: 2005
+  year_high: 2007
+
+- input: "before 1973"
+  year_low:
+  year_high: 1973
+
+- input: "after 1973"
+  year_low: 1973
+  year_high:
+
+- input:
+    - "mid 1970s"
+    - "mid 70s"
+    - "mid-70s"
+    - "mid-70's"
+  year_low: 1973
+  year_high: 1976
+
+- input:
+    - "early 1970s"
+    - "early 70s"
+    - "early-70s"
+    - "early 70's"
+  year_low: 1970
+  year_high: 1973
+
+- input:
+    - "73-75"
+    - "1973-1975"
+    - "1973 - 1975"
+    - "1973- 1975"
+    - "1973 -1975"
+    - "1973-75"
+  year_low: 1973
+  year_high: 1975
+
+- input: "1975-1973"
+  year_low: 1973
+  year_high: 1975
+
+- input:
+    - "2003-4"
+    - "2003-04"
+    - "03-04"
+  year_low: 2003
+  year_high: 2004
+
+- input:
+    - "1973 (Circa)"
+    - "Circa 1973"
+    - "ca 1973"
+    - "c.a. 1973"
+    - "c. 1973"
+    - "ca. 1973"
+    - "approx. 1973"
+    - "around 1973"
+    - "about 1973"
+    - "circ. 1973"
+    - "cca 1973"
+  year_low: 1972
+  year_high: 1974
+
+- input: "73"
+  year_low: 1973
+  year_high: 1973
+
+- input: "06"
+  year_low: 2006
+  year_high: 2006
