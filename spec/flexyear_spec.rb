@@ -13,12 +13,14 @@ describe FlexYear do
   end
 
   [FlexYear, FlexYear::Historical].each do |flexyear_class|
-    text_examples.each do |ex|
-      [ex["input"]].flatten.each do |input|
-        it "returns #{ex["year_low"].inspect},#{ex["year_high"].inspect} when given '#{input}'" do
-          result = flexyear_class.new(input)
-          expect(result.year_low).to eq(ex["year_low"])
-          expect(result.year_high).to eq(ex["year_high"])
+    describe "#{flexyear_class.name}" do
+      text_examples.each do |ex|
+        [ex["input"]].flatten.each do |input|
+          it "should return #{ex["year_low"].inspect},#{ex["year_high"].inspect} when given #{input.inspect}" do
+            result = flexyear_class.new(input)
+            expect(result.year_low).to eq(ex["year_low"])
+            expect(result.year_high).to eq(ex["year_high"])
+          end
         end
       end
     end
