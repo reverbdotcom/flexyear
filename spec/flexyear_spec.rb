@@ -38,6 +38,12 @@ describe FlexYear do
       its(:year_high) { should eq(1979) }
     end
 
+    context "given 1979 (with a space)" do
+      subject { flexyear_class.new("1979 ") }
+      its(:year_low) { should eq(1979) }
+      its(:year_high) { should eq(1979) }
+    end
+
     context 'given 197*' do
       subject { flexyear_class.new('197*') }
       its(:year_low) { should eq(1970) }

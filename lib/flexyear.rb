@@ -26,7 +26,7 @@ class FlexYear
   attr_reader :year_low, :year_high
 
   def initialize(year_string)
-    @year_string = year_string.to_s
+    @year_string = year_string.to_s.strip
 
     @low, @high = RangeParser.parse(@year_string)
 
