@@ -1,15 +1,15 @@
 # coding: utf-8
-lib = File.expand_path('../lib', __FILE__)
+lib = File.expand_path("../lib", __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'flexyear/version'
+require "flexyear/version"
 
 Gem::Specification.new do |spec|
   spec.name          = "flexyear"
   spec.version       = FlexYear::VERSION
   spec.authors       = ["Dan Melnick & Yan Pritzker"]
   spec.email         = ["pair+dm+yp@reverb.com"]
-  spec.description   = %q{Parse common year range formats like '1973-75' or natural language ranges like 'mid 80s'}
-  spec.summary       = %q{Natural language year range parser}
+  spec.description   = "Parse common year range formats like '1973-75' or natural language ranges like 'mid 80s'"
+  spec.summary       = "Natural language year range parser"
   spec.homepage      = "http://github.com/reverbdotcom/flexyear"
   spec.license       = "MIT"
 
