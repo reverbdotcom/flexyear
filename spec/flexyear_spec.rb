@@ -215,11 +215,32 @@ describe FlexYear do
       end
     end
 
+    context "given a list" do
+      context "mixed years" do
+        subject { flexyear_class.new(["1980s", "mid-80s", "1988 - 1999", 2001,]) }
+        its(:year_low) { should eq(1980) }
+        its(:year_high) { should eq(2001) }
+      end
+
+      context "same years" do
+        subject { flexyear_class.new(["1988", "1988"]) }
+        its(:year_low) { should eq(1988) }
+        its(:year_high) { should eq(1988) }
+      end
+
+      context "mixed years with nil" do
+        subject { flexyear_class.new(["1988", "1990s", nil]) }
+        its(:year_low) { should eq(1988) }
+        its(:year_high) { should eq(1999) }
+      end
+    end
+
     context "given 12345 (five digit year)" do
       specify do
         expect { flexyear_class.new('12345') }.to raise_error(FlexYear::InvalidYearError)
       end
     end
+
   end
 
   describe FlexYear::Historical do
