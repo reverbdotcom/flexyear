@@ -10,6 +10,12 @@ FlexYear.new("1980s").year_high == 1989
 
 FlexYear.new("mid-80s").year_low == 1983
 FlexYear.new("mid-80s").year_high == 1986
+
+FlexYear.new(1983).year_low == 1983
+FlexYear.new(1983).year_high == 1983
+
+FlexYear.new(["1980s", "1988 - 2000", 2001]).year_low == 1980
+FlexYear.new(["1980s", "1988 - 2000", 2001]).year_high == 2001
 ```
 
 It's pretty flexible in the kinds of things it takes. For more examples, see the spec.
@@ -30,6 +36,7 @@ Or install it yourself as:
 
     $ gem install flexyear
 
+
 ## Contributing
 
 1. Fork it
@@ -37,3 +44,7 @@ Or install it yourself as:
 3. Commit your changes (`git commit -am 'Add some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)
 5. Create new Pull Request
+
+### Test
+
+`rake`

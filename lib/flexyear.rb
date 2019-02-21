@@ -25,19 +25,37 @@ class FlexYear
 
   attr_reader :year_low, :year_high
 
-  def initialize(year_string)
-    @year_string = year_string.to_s.strip
+  def initialize(year_input)
+    @year_input = year_input
 
-    @low, @high = RangeParser.parse(@year_string)
-
-    parse_year
+    if year_input.is_a?(Array)
+      parse_year_list(year_input)
+    else
+      parse_year_string(year_input)
+    end
   end
 
   def to_s
-    @year_string
+    @year_input
   end
 
   private
+
+  def parse_year_list(years)
+    all_years = years.flat_map do |y|
+      year = self.class.new(y)
+      [year.year_low, year.year_high]
+    end
+
+    flat_years = all_years.compact.uniq
+
+    @year_low = flat_years.min
+    @year_high = flat_years.max
+  end
+
+  def parse_year_string(year_string)
+    parse_year(year_string.to_s.strip)
+  end
 
   def centuryize(year, base_year=nil)
     base = default_base_year(year)
@@ -63,27 +81,29 @@ class FlexYear
     end
   end
 
-  def parse_year
-    if @year_string =~ range_regex && $1 && $2
+  def parse_year(year_string)
+    low, high = RangeParser.parse(year_string)
+
+    if year_string =~ range_regex && $1 && $2
       @year_low = centuryize($1).to_i
       @year_low, @year_high = [@year_low, centuryize($2, @year_low).to_i].sort
     else
-      if @year_string =~ decade_regex
+      if year_string =~ decade_regex
         @base_year = centuryize($1).to_i
-      elsif @year_string =~ asterisk_regex
+      elsif year_string =~ asterisk_regex
         @base_year = centuryize($1).to_i * 10
-      elsif @year_string =~ starts_with_word_regex
+      elsif year_string =~ starts_with_word_regex
         @base_year = centuryize($1).to_i
       else
-        @base_year = centuryize(@year_string.gsub(/\D+/,'')).to_i
+        @base_year = centuryize(year_string.gsub(/\D+/,'')).to_i
       end
 
       if @base_year > 9999
         raise InvalidYearError, "Please use a four digit year."
       end
 
-      @year_low = @base_year + @low unless @low.nil?
-      @year_high = @base_year + @high unless @high.nil?
+      @year_low = @base_year + low unless low.nil?
+      @year_high = @base_year + high unless high.nil?
     end
   end
 
@@ -107,11 +127,11 @@ class FlexYear
   class Historical < FlexYear
     private
 
-    def parse_year
-      super
+    def parse_year(year_string)
+      super(year_string)
 
       if (!@year_low.nil? && @year_low > DateTime.now.year) || (!@year_high.nil? && @year_high > DateTime.now.year)
-        raise InvalidYearError, "The year must be in the past. You specified #{@year_string}; Today is #{DateTime.now.year}"
+        raise InvalidYearError, "The year must be in the past. You specified #{year_string}; Today is #{DateTime.now.year}"
       end
     end
   end
