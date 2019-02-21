@@ -48,3 +48,11 @@ Or install it yourself as:
 ### Test
 
 `rake`
+
+### Publish a new version
+
+We use bundlers rake commands to release versions. To cut and release a new version:
+
+1. Update lib/flexyear/version.rb and increment to your new desired version
+2. Commit and push your version bump
+3. Run `bundle exec rake release` to package and publish that version
