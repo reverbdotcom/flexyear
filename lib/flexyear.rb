@@ -39,6 +39,10 @@ class FlexYear
     @year_input
   end
 
+  def decade?
+    year_low % 10 == 0 && year_high % 10 == 9
+  end
+
   private
 
   def parse_year_list(years)

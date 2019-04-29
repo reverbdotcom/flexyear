@@ -30,42 +30,49 @@ describe FlexYear do
       subject { flexyear_class.new(1979) }
       its(:year_low) { should eq(1979) }
       its(:year_high) { should eq(1979) }
+      its(:decade?) { should eq(false) }
     end
 
     context "given 1979" do
       subject { flexyear_class.new("1979") }
       its(:year_low) { should eq(1979) }
       its(:year_high) { should eq(1979) }
+      its(:decade?) { should eq(false) }
     end
 
     context "given 1979 (with a space)" do
       subject { flexyear_class.new("1979 ") }
       its(:year_low) { should eq(1979) }
       its(:year_high) { should eq(1979) }
+      its(:decade?) { should eq(false) }
     end
 
     context 'given 197*' do
       subject { flexyear_class.new('197*') }
       its(:year_low) { should eq(1970) }
       its(:year_high) { should eq(1979) }
+      its(:decade?) { should eq(true) }
     end
 
     context "given 1970s" do
       subject { flexyear_class.new("1970s") }
       its(:year_low) { should eq(1970) }
       its(:year_high) { should eq(1979) }
+      its(:decade?) { should eq(true) }
     end
 
     context "given 70s" do
       subject { flexyear_class.new("70s") }
       its(:year_low) { should eq(1970) }
       its(:year_high) { should eq(1979) }
+      its(:decade?) { should eq(true) }
     end
 
     context "given something with negative and dots" do
       subject { flexyear_class.new("approx.-2006") }
       its(:year_low) { should eq(2005) }
       its(:year_high) { should eq(2007) }
+      its(:decade?) { should eq(false) }
     end
 
     context 'given before 1973' do
