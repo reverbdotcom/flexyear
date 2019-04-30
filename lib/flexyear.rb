@@ -40,6 +40,7 @@ class FlexYear
   end
 
   def decade?
+    return false unless year_low && year_high
     year_low % 10 == 0 && year_high % 10 == 9
   end
 
