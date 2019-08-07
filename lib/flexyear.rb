@@ -23,7 +23,7 @@ require 'date'
 class FlexYear
   class InvalidYearError < ArgumentError; end
 
-  attr_reader :year_low, :year_high
+  attr_reader :year_low, :year_high, :decade, :decades
 
   def initialize(year_input)
     @year_input = year_input
@@ -44,6 +44,21 @@ class FlexYear
     year_low % 10 == 0 && year_high % 10 == 9
   end
 
+  def parse_decade(yr_low, yr_high)
+    return if @year_input.is_a?(Array)
+    return unless yr_low && yr_high
+
+    same_decade = yr_low.to_s[0,3] == yr_high.to_s[0, 3]
+    @decade = "#{yr_low.to_s[0,3]}0s" if same_decade
+  end
+
+  def parse_decades(years)
+    return unless @year_input.is_a?(Array)
+
+    parsed_decades = years.flat_map { |y| self.class.new(y).decade }
+    @decades = parsed_decades
+  end
+
   private
 
   def parse_year_list(years)
@@ -56,10 +71,13 @@ class FlexYear
 
     @year_low = flat_years.min
     @year_high = flat_years.max
+
+    parse_decades(years)
   end
 
   def parse_year_string(year_string)
     parse_year(year_string.to_s.strip)
+    parse_decade(@year_low, @year_high)
   end
 
   def centuryize(year, base_year=nil)

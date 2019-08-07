@@ -13,6 +13,8 @@ describe FlexYear do
       its(:year_low) { should be_nil }
       its(:year_high) { should be_nil }
       its(:decade?) { should eq(false) }
+      its(:decade) { should be_nil }
+      its(:decades) { should be_nil }
     end
 
     context "given nil" do
@@ -20,6 +22,8 @@ describe FlexYear do
       its(:year_low) { should be_nil }
       its(:year_high) { should be_nil }
       its(:decade?) { should eq(false) }
+      its(:decade) { should be_nil }
+      its(:decades) { should be_nil }
     end
 
     context "text" do
@@ -27,6 +31,8 @@ describe FlexYear do
       its(:year_low) { should be_nil }
       its(:year_high) { should be_nil }
       its(:decade?) { should eq(false) }
+      its(:decade) { should be_nil }
+      its(:decades) { should be_nil }
     end
 
     context "given 1979 as number" do
@@ -34,6 +40,8 @@ describe FlexYear do
       its(:year_low) { should eq(1979) }
       its(:year_high) { should eq(1979) }
       its(:decade?) { should eq(false) }
+      its(:decade) { should eq("1970s") }
+      its(:decades) { should be_nil }
     end
 
     context "given 1979" do
@@ -41,6 +49,8 @@ describe FlexYear do
       its(:year_low) { should eq(1979) }
       its(:year_high) { should eq(1979) }
       its(:decade?) { should eq(false) }
+      its(:decade) { should eq("1970s") }
+      its(:decades) { should be_nil }
     end
 
     context "given 1979 (with a space)" do
@@ -48,6 +58,8 @@ describe FlexYear do
       its(:year_low) { should eq(1979) }
       its(:year_high) { should eq(1979) }
       its(:decade?) { should eq(false) }
+      its(:decade) { should eq("1970s") }
+      its(:decades) { should be_nil }
     end
 
     context 'given 197*' do
@@ -55,6 +67,8 @@ describe FlexYear do
       its(:year_low) { should eq(1970) }
       its(:year_high) { should eq(1979) }
       its(:decade?) { should eq(true) }
+      its(:decade) { should eq("1970s") }
+      its(:decades) { should be_nil }
     end
 
     context "given 1970s" do
@@ -62,6 +76,8 @@ describe FlexYear do
       its(:year_low) { should eq(1970) }
       its(:year_high) { should eq(1979) }
       its(:decade?) { should eq(true) }
+      its(:decade) { should eq("1970s") }
+      its(:decades) { should be_nil }
     end
 
     context "given 70s" do
@@ -69,6 +85,8 @@ describe FlexYear do
       its(:year_low) { should eq(1970) }
       its(:year_high) { should eq(1979) }
       its(:decade?) { should eq(true) }
+      its(:decade) { should eq("1970s") }
+      its(:decades) { should be_nil }
     end
 
     context "given something with negative and dots" do
@@ -76,6 +94,8 @@ describe FlexYear do
       its(:year_low) { should eq(2005) }
       its(:year_high) { should eq(2007) }
       its(:decade?) { should eq(false) }
+      its(:decade) { should eq("2000s") }
+      its(:decades) { should be_nil }
     end
 
     context 'given before 1973' do
@@ -83,6 +103,8 @@ describe FlexYear do
       its(:year_low) { should be_nil }
       its(:year_high) { should eq(1973) }
       its(:decade?) { should eq(false) }
+      its(:decade) { should be_nil }
+      its(:decades) { should be_nil }
     end
 
     context 'given after 1973' do
@@ -90,6 +112,8 @@ describe FlexYear do
       its(:year_low) { should eq(1973) }
       its(:year_high) { should be_nil }
       its(:decade?) { should eq(false) }
+      its(:decade) { should be_nil }
+      its(:decades) { should be_nil }
     end
 
     ["mid 1970s", "mid 70s", "mid-70s", "mid-70's"].each do |year|
@@ -97,6 +121,8 @@ describe FlexYear do
         subject { flexyear_class.new(year) }
         its(:year_low) { should eq(1973) }
         its(:year_high) { should eq(1976) }
+        its(:decade) { should eq("1970s") }
+        its(:decades) { should be_nil }
         its(:to_s) { should eq(year) }
         its(:decade?) { should eq(false) }
       end
@@ -108,6 +134,8 @@ describe FlexYear do
         its(:year_low) { should eq(1970) }
         its(:year_high) { should eq(1973) }
         its(:decade?) { should eq(false) }
+        its(:decade) { should eq("1970s") }
+        its(:decades) { should be_nil }
       end
     end
 
@@ -117,6 +145,8 @@ describe FlexYear do
         its(:year_low) { should eq(1976) }
         its(:year_high) { should eq(1979) }
         its(:decade?) { should eq(false) }
+        its(:decade) { should eq("1970s") }
+        its(:decades) { should be_nil }
       end
     end
 
@@ -126,6 +156,8 @@ describe FlexYear do
         its(:year_low) { should eq(1973) }
         its(:year_high) { should eq(1975) }
         its(:decade?) { should eq(false) }
+        its(:decade) { should eq("1970s") }
+        its(:decades) { should be_nil }
       end
     end
 
@@ -133,7 +165,18 @@ describe FlexYear do
       subject { flexyear_class.new('1975-1973') }
       its(:year_low) { should eq(1973) }
       its(:year_high) { should eq(1975) }
-        its(:decade?) { should eq(false) }
+      its(:decade?) { should eq(false) }
+      its(:decade) { should eq("1970s") }
+      its(:decades) { should be_nil }
+    end
+
+    context "given a range in difference decades" do
+      subject { flexyear_class.new('1975-1983') }
+      its(:year_low) { should eq(1975) }
+      its(:year_high) { should eq(1983) }
+      its(:decade?) { should eq(false) }
+      its(:decade) { should be_nil}
+      its(:decades) { should be_nil }
     end
 
     context "given a range" do
@@ -142,6 +185,8 @@ describe FlexYear do
         its(:year_low) { should eq(2003) }
         its(:year_high) { should eq(2004) }
         its(:decade?) { should eq(false) }
+        its(:decade) { should eq("2000s") }
+        its(:decades) { should be_nil }
       end
     end
 
@@ -151,6 +196,8 @@ describe FlexYear do
         its(:year_low) { should eq(1972) }
         its(:year_high) { should eq(1974) }
         its(:decade?) { should eq(false) }
+        its(:decade) { should eq("1970s") }
+        its(:decades) { should be_nil }
       end
 
       context 'at the beginning of the string' do
@@ -158,6 +205,8 @@ describe FlexYear do
         its(:year_low) { should eq(1972) }
         its(:year_high) { should eq(1974) }
         its(:decade?) { should eq(false) }
+        its(:decade) { should eq("1970s") }
+        its(:decades) { should be_nil }
       end
 
       context 'abbreviated' do
@@ -165,6 +214,8 @@ describe FlexYear do
         its(:year_low) { should eq(1972) }
         its(:year_high) { should eq(1974) }
         its(:decade?) { should eq(false) }
+        its(:decade) { should eq("1970s") }
+        its(:decades) { should be_nil }
       end
 
       context 'with dots' do
@@ -172,6 +223,8 @@ describe FlexYear do
         its(:year_low) { should eq(1972) }
         its(:year_high) { should eq(1974) }
         its(:decade?) { should eq(false) }
+        its(:decade) { should eq("1970s") }
+        its(:decades) { should be_nil }
       end
 
       context 'with c.' do
@@ -179,6 +232,8 @@ describe FlexYear do
         its(:year_low) { should eq(1972) }
         its(:year_high) { should eq(1974) }
         its(:decade?) { should eq(false) }
+        its(:decade) { should eq("1970s") }
+        its(:decades) { should be_nil }
       end
 
       context 'with ca.' do
@@ -186,6 +241,8 @@ describe FlexYear do
         its(:year_low) { should eq(1972) }
         its(:year_high) { should eq(1974) }
         its(:decade?) { should eq(false) }
+        its(:decade) { should eq("1970s") }
+        its(:decades) { should be_nil }
       end
 
       context 'with approx.' do
@@ -193,6 +250,8 @@ describe FlexYear do
         its(:year_low) { should eq(1972) }
         its(:year_high) { should eq(1974) }
         its(:decade?) { should eq(false) }
+        its(:decade) { should eq("1970s") }
+        its(:decades) { should be_nil }
       end
 
       context 'with appxly.' do
@@ -200,6 +259,8 @@ describe FlexYear do
         its(:year_low) { should eq(1972) }
         its(:year_high) { should eq(1974) }
         its(:decade?) { should eq(false) }
+        its(:decade) { should eq("1970s") }
+        its(:decades) { should be_nil }
       end
 
       context 'with around' do
@@ -207,6 +268,8 @@ describe FlexYear do
         its(:year_low) { should eq(1972) }
         its(:year_high) { should eq(1974) }
         its(:decade?) { should eq(false) }
+        its(:decade) { should eq("1970s") }
+        its(:decades) { should be_nil }
       end
 
       context 'with about' do
@@ -214,6 +277,8 @@ describe FlexYear do
         its(:year_low) { should eq(1972) }
         its(:year_high) { should eq(1974) }
         its(:decade?) { should eq(false) }
+        its(:decade) { should eq("1970s") }
+        its(:decades) { should be_nil }
       end
 
       context 'with circ' do
@@ -221,6 +286,8 @@ describe FlexYear do
         its(:year_low) { should eq(1972) }
         its(:year_high) { should eq(1974) }
         its(:decade?) { should eq(false) }
+        its(:decade) { should eq("1970s") }
+        its(:decades) { should be_nil }
       end
 
       context 'with cca' do
@@ -228,6 +295,8 @@ describe FlexYear do
         its(:year_low) { should eq(1972) }
         its(:year_high) { should eq(1974) }
         its(:decade?) { should eq(false) }
+        its(:decade) { should eq("1970s") }
+        its(:decades) { should be_nil }
       end
 
       context 'given 2 character fields' do
@@ -236,6 +305,8 @@ describe FlexYear do
           its(:year_low) { should eq(1973) }
           its(:year_high) { should eq(1973) }
           its(:decade?) { should eq(false) }
+          its(:decade) { should eq("1970s") }
+          its(:decades) { should be_nil }
         end
 
         context "from current century" do
@@ -243,30 +314,38 @@ describe FlexYear do
           its(:year_low) { should eq(2006) }
           its(:year_high) { should eq(2006) }
           its(:decade?) { should eq(false) }
+          its(:decade) { should eq("2000s") }
+          its(:decades) { should be_nil }
         end
       end
     end
 
     context "given a list" do
       context "mixed years" do
-        subject { flexyear_class.new(["1980s", "mid-80s", "1988 - 1999", 2001,]) }
+        subject { flexyear_class.new(["1980s", "mid-80s", "1988 - 1999", 2001, "199*"]) }
         its(:year_low) { should eq(1980) }
         its(:year_high) { should eq(2001) }
-          its(:decade?) { should eq(false) }
+        its(:decade?) { should eq(false) }
+        its(:decade) { should be_nil }
+        its(:decades) { should eq(["1980s", "1980s", nil, "2000s", "1990s"])}
       end
 
       context "same years" do
         subject { flexyear_class.new(["1988", "1988"]) }
         its(:year_low) { should eq(1988) }
         its(:year_high) { should eq(1988) }
-          its(:decade?) { should eq(false) }
+        its(:decade?) { should eq(false) }
+        its(:decade) { should be_nil }
+        its(:decades) { should eq(["1980s", "1980s"])}
       end
 
       context "mixed years with nil" do
         subject { flexyear_class.new(["1988", "1990s", nil]) }
         its(:year_low) { should eq(1988) }
         its(:year_high) { should eq(1999) }
-          its(:decade?) { should eq(false) }
+        its(:decade?) { should eq(false) }
+        its(:decade) { should be_nil }
+        its(:decades) { should eq(["1980s", "1990s", nil])}
       end
     end
 

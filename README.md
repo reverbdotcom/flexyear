@@ -7,15 +7,23 @@ Examples:
 ```ruby
 FlexYear.new("1980s").year_low == 1980
 FlexYear.new("1980s").year_high == 1989
+FlexYear.new("1980s").decade == 1980s
 
 FlexYear.new("mid-80s").year_low == 1983
 FlexYear.new("mid-80s").year_high == 1986
+FlexYear.new("mid-80s").decade == 1980s
 
 FlexYear.new(1983).year_low == 1983
 FlexYear.new(1983).year_high == 1983
+FlexYear.new(1983).decade == 1980s
+
+FlexYear.new(198*).year_low == 1980
+FlexYear.new(198*).year_high == 1989
+FlexYear.new(198*).decade == 1980s
 
 FlexYear.new(["1980s", "1988 - 2000", 2001]).year_low == 1980
 FlexYear.new(["1980s", "1988 - 2000", 2001]).year_high == 2001
+FlexYear.new(["1980s", "1988 - 2000", nil, 2001]).decades == [1980s, nil, nil, 2000s]
 ```
 
 It's pretty flexible in the kinds of things it takes. For more examples, see the spec.
