@@ -110,6 +110,9 @@ class FlexYear
     if year_string =~ range_regex && $1 && $2
       @year_low = centuryize($1).to_i
       @year_low, @year_high = [@year_low, centuryize($2, @year_low).to_i].sort
+    elsif year_string =~ open_ended_range_regex
+      @year_low = centuryize($1).to_i
+      @year_high = nil
     else
       if year_string =~ decade_regex
         @base_year = centuryize($1).to_i
@@ -132,6 +135,10 @@ class FlexYear
 
   def range_regex
     /(\d+)\s*-\s*(\d+)/
+  end
+
+  def open_ended_range_regex
+    /(\d+)\s*-\s*(\D+)/
   end
 
   def asterisk_regex
