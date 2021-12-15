@@ -112,7 +112,7 @@ class FlexYear
       @year_low, @year_high = [@year_low, centuryize($2, @year_low).to_i].sort
     elsif year_string =~ open_ended_range_regex
       @year_low = centuryize($1).to_i
-      @year_high = nil
+      @year_high = Date.today.year
     else
       if year_string =~ decade_regex
         @base_year = centuryize($1).to_i

@@ -173,7 +173,7 @@ describe FlexYear do
     context "given a range from a year to present" do
       subject { flexyear_class.new('1975-Present') }
       its(:year_low) { should eq(1975) }
-      its(:year_high) { should be_nil }
+      its(:year_high) { should eq(2016) }
       its(:decade?) { should eq(false) }
       its(:decade) { should be_nil }
       its(:decades) { should be_nil }
