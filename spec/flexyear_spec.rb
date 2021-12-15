@@ -351,10 +351,19 @@ describe FlexYear do
       context "mixed years with nil" do
         subject { flexyear_class.new(["1988", "1990s", nil]) }
         its(:year_low) { should eq(1988) }
-        its(:year_high) { should eq(1999) }
+        its(:year_high) { should eq(2016) }
         its(:decade?) { should eq(false) }
         its(:decade) { should be_nil }
         its(:decades) { should eq(["1980s", "1990s", nil])}
+      end
+
+      context "with a year with an undefined end date" do
+        subject { flexyear_class.new(["1980s", "mid-80s", "1988 - 1999", 2001, "199*", "1999 - Present"]) }
+        its(:year_low) { should eq(1980) }
+        its(:year_high) { should eq(2016) }
+        its(:decade?) { should eq(false) }
+        its(:decade) { should be_nil }
+        its(:decades) { should eq(["1980s", "1980s", nil, "2000s", "1990s", nil])}
       end
     end
 

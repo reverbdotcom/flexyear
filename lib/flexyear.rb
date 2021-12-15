@@ -67,7 +67,7 @@ class FlexYear
       [year.year_low, year.year_high]
     end
 
-    flat_years = all_years.compact.uniq
+    flat_years = all_years.uniq.map { |y| y.nil? ? Date.today.year : y }
 
     @year_low = flat_years.min
     @year_high = flat_years.max
