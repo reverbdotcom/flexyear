@@ -67,7 +67,7 @@ class FlexYear
       [year.year_low, year.year_high]
     end
 
-    flat_years = all_years.compact.uniq
+    flat_years = all_years.uniq.map { |y| y.nil? ? Date.today.year : y }
 
     @year_low = flat_years.min
     @year_high = flat_years.max
@@ -110,6 +110,9 @@ class FlexYear
     if year_string =~ range_regex && $1 && $2
       @year_low = centuryize($1).to_i
       @year_low, @year_high = [@year_low, centuryize($2, @year_low).to_i].sort
+    elsif year_string =~ open_ended_range_regex
+      @year_low = centuryize($1).to_i
+      @year_high = Date.today.year
     else
       if year_string =~ decade_regex
         @base_year = centuryize($1).to_i
@@ -132,6 +135,10 @@ class FlexYear
 
   def range_regex
     /(\d+)\s*-\s*(\d+)/
+  end
+
+  def open_ended_range_regex
+    /(\d+)\s*-\s*(\D+)/
   end
 
   def asterisk_regex
